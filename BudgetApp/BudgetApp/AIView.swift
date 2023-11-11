@@ -12,7 +12,7 @@ import SwiftUI
 struct AIView: View {
     @State private var messages: [String] = []
     @State private var inputMessage: String = ""
-    let chatGPT = ChatGPT(apiKey: "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")
+    let chatGPT = ChatGPT(apiKey: "sk")
     
     var body: some View {
         VStack {

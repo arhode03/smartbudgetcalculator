@@ -17,7 +17,6 @@
 		FA17F11D2AFDD7440051C500 /* CalculatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA17F11C2AFDD7440051C500 /* CalculatorView.swift */; };
 		FA17F11F2AFDDBF30051C500 /* ChatGPT.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA17F11E2AFDDBF30051C500 /* ChatGPT.swift */; };
 		FA17F1212AFDDC130051C500 /* AIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA17F1202AFDDC130051C500 /* AIView.swift */; };
-		FA17F1232AFDE23F0051C500 /* VariableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA17F1222AFDE23F0051C500 /* VariableView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -51,7 +50,6 @@
 		FA17F11C2AFDD7440051C500 /* CalculatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalculatorView.swift; sourceTree = "<group>"; };
 		FA17F11E2AFDDBF30051C500 /* ChatGPT.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatGPT.swift; sourceTree = "<group>"; };
 		FA17F1202AFDDC130051C500 /* AIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AIView.swift; sourceTree = "<group>"; };
-		FA17F1222AFDE23F0051C500 /* VariableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VariableView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -107,7 +105,6 @@
 				FA17F11E2AFDDBF30051C500 /* ChatGPT.swift */,
 				FA17F1202AFDDC130051C500 /* AIView.swift */,
 				FA17F11C2AFDD7440051C500 /* CalculatorView.swift */,
-				FA17F1222AFDE23F0051C500 /* VariableView.swift */,
 				FA17F0F62AFDD70B0051C500 /* Assets.xcassets */,
 				FA17F0F82AFDD70B0051C500 /* Preview Content */,
 			);
@@ -269,7 +266,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FA17F1232AFDE23F0051C500 /* VariableView.swift in Sources */,
 				FA17F0F52AFDD70A0051C500 /* ContentView.swift in Sources */,
 				FA17F11D2AFDD7440051C500 /* CalculatorView.swift in Sources */,
 				FA17F1212AFDDC130051C500 /* AIView.swift in Sources */,
