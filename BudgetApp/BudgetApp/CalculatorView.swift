@@ -202,8 +202,13 @@ struct GraphView: View{
             NavigationLink(destination: ExpensesListView(expenses: $expenses, v_expenses: $v_expenses)) {
                 RectangleButton(color: Color.red, title: "Detailed Expenses")
             }
+            NavigationLink(destination: {
+                ContentView()
+            }, label: {
+                RectangleButton(color: Color.red, title: "Back to Home")
+            })
+           
         }
-        .background(Color.black)
     }
     
     private func barHeight(value: Double) -> CGFloat {
