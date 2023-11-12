@@ -86,7 +86,7 @@ struct MidwayView: View {
         Text("Remaining Income: \(formattedRemainingIncome)")
             .font(.headline)
             .padding()
-        NavigationLink(destination: VariableExpenseView(remainingIncome: Double(remainingIncome), monthlyIncome: $monthlyIncome,fixedCosts: fixedCosts)) {
+        NavigationLink(destination: VariableExpenseView(remainingIncome: Double(remainingIncome), monthlyIncome: $monthlyIncome, expenses: $expenses, fixedCosts: fixedCosts)) {
             RectangleButton(color: Color.red, title: "Done with Fixed")
         }
     }
@@ -101,6 +101,7 @@ struct VariableExpenseView: View {
     var remainingIncome: Double
     @Binding var monthlyIncome: Double
     @State private var v_expenses: [Expense] = []
+    @Binding var expenses: [Expense]
     var fixedCosts: Double
     var variableCosts: Double {
             v_expenses.reduce(0) { $0 + $1.amount }
@@ -130,7 +131,7 @@ struct VariableExpenseView: View {
             Text("Add Expense")
         }
         Spacer()
-        VariableRunningTotalView(remainingIncome: remainingIncome, monthlyIncome: $monthlyIncome, v_expenses: $v_expenses,variableCosts: variableCosts, fixedCosts: fixedCosts)
+        VariableRunningTotalView(remainingIncome: remainingIncome, monthlyIncome: $monthlyIncome, v_expenses: $v_expenses, expenses: $expenses,variableCosts: variableCosts, fixedCosts: fixedCosts)
     }
     func createCurrencyFormatter() -> NumberFormatter {
         let formatter = NumberFormatter()
@@ -142,6 +143,7 @@ struct VariableRunningTotalView: View {
     var remainingIncome: Double
     @Binding var monthlyIncome: Double
     @Binding var v_expenses: [Expense]
+    @Binding var expenses: [Expense]
     var variableCosts: Double
     var fixedCosts: Double
     var variableremainingIncome: Double {
@@ -156,7 +158,7 @@ struct VariableRunningTotalView: View {
         Text("Remaining Income: \(formattedRemainingIncome_var)")
             .font(.headline)
             .padding()
-        NavigationLink(destination: GraphView(monthlyIncome: $monthlyIncome, variableCosts: variableCosts, fixedCosts: fixedCosts, variableremainingIncome: variableremainingIncome)) {
+        NavigationLink(destination: GraphView(monthlyIncome: $monthlyIncome, variableCosts: variableCosts, fixedCosts: fixedCosts, variableremainingIncome: variableremainingIncome, v_expenses: $v_expenses, expenses: $expenses)) {
             RectangleButton(color: Color.red, title: "Done with Variable")
         }
     }
@@ -172,6 +174,8 @@ struct GraphView: View{
     var variableCosts: Double
     var fixedCosts: Double
     var variableremainingIncome: Double
+    @Binding var v_expenses: [Expense]
+    @Binding var expenses: [Expense]
     var body: some View {
         VStack {
             Text("Monthly Budget Breakdown")
@@ -195,14 +199,44 @@ struct GraphView: View{
                     .overlay(Text("\(Int(fixedCosts)) Total Fixed Cost").foregroundColor(.white))
             }
             .frame(height: 200)
-            
+            NavigationLink(destination: ExpensesListView(expenses: $expenses, v_expenses: $v_expenses)) {
+                RectangleButton(color: Color.red, title: "Detailed Expenses")
+            }
         }
-        
+        .background(Color.black)
     }
     
     private func barHeight(value: Double) -> CGFloat {
         let maximumHeight: CGFloat = 200
         let maximumValue = max(monthlyIncome, variableCosts, fixedCosts)
         return CGFloat(value / maximumValue) * maximumHeight
+    }
+}
+struct ExpensesListView: View {
+    @Binding var expenses: [Expense]
+    @Binding var v_expenses: [Expense]
+    
+    var body: some View {
+        List {
+            Section(header: Text("Fixed Expenses")) {
+                ForEach(expenses) { expense in
+                    HStack {
+                        Text("\(expense.label)")
+                        Spacer()
+                        Text(String(format: "%.2f", expense.amount)) // Update to display 2 digits after decimal
+                    }
+                }
+            }
+            
+            Section(header: Text("Variable Expenses")) {
+                ForEach(v_expenses) { expense in
+                    HStack {
+                        Text("\(expense.label)")
+                        Spacer()
+                        Text(String(format: "%.2f", expense.amount)) // Update to display 2 digits after decimal
+                    }
+                }
+            }
+        }
     }
 }
