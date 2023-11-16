@@ -2,13 +2,13 @@
 //  ChatGPT.swift
 //  BudgetApp
 //
-//  Created by Alex Rhodes on 11/9/23.
+//  Created by Alex Rhodes and Nicholas Mollica on 11/9/23.
 //
 
 
 import Foundation
 
-struct ChatGPT {
+struct ChatGPT {              //backend for AI
     let apiKey: String
     
     func sendMessage(_ message: String, completion: @escaping (Result<String, Error>) -> Void) {
@@ -18,37 +18,37 @@ struct ChatGPT {
         let url = URL(string: "https://api.openai.com/v1/chat/completions")!
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
-        request.setValue("Bearer \(apiKey)", forHTTPHeaderField: "Authorization")
+        request.setValue("Bearer \(apiKey)", forHTTPHeaderField: "Authorization") 
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         
-        let requestBody: [String: Any] = [
+        let requestBody: [String: Any] = [      //request body for AI
             "model": modelName,
             "messages": [
-                ["role": "system", "content": "You are a helpful assistant."],
-                ["role": "user", "content": message]
+                ["role": "system", "content": "You are a helpful assistant."],   //system input
+                ["role": "user", "content": message]    //user input
             ],
-            "max_tokens": 200
+            "max_tokens": 200              //max tokens for AI (max length of response)
         ]
         
-        let jsonData = try! JSONSerialization.data(withJSONObject: requestBody)
+        let jsonData = try! JSONSerialization.data(withJSONObject: requestBody)   //json data for request body
         request.httpBody = jsonData
         
-        let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
+        let task = URLSession.shared.dataTask(with: request) { (data, response, error) in   //takes URL request and returns response
             if let error = error {
                 completion(.failure(error))
                 return
             }
             
-            if let data = data {
+            if let data = data {                             //edits response from AI
                 if let json = try? JSONSerialization.jsonObject(with: data, options: []) as? [String: Any],
-                   let choices = json["choices"] as? [[String: Any]],
+                   let choices = json["choices"] as? [[String: Any]],       //choices for AI response
                    let content = choices.first?["message"] as? [String: Any],
                    let text = content["content"] as? String {
-                    completion(.success(text))
-                    return
+                    completion(.success(text))              
+                    return                    //returns AI response
                 }
                 
-                completion(.failure(NSError(domain: "Response Parsing Error", code: 0, userInfo: nil)))
+                completion(.failure(NSError(domain: "Response Parsing Error", code: 0, userInfo: nil)))  //if error in response
             }
         }
         

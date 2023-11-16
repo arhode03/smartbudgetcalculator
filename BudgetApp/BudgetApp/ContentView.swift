@@ -2,18 +2,18 @@
 //  ContentView.swift
 //  BudgetApp
 //
-//  Created by Alex Rhodes on 11/9/23.
+//  Created by Alex Rhodes and Nicholas Mollica on 11/9/23.
 //
 
 import SwiftUI
 
-struct ContentView: View {
+struct ContentView: View {      
     var body: some View {
         NavigationView {
             ZStack {
                 Color.black.ignoresSafeArea()
                 
-                VStack(spacing: 20) {
+                VStack(spacing: 20) {               //creates main menu
                     Image("logo")
                         .resizable()
                         .scaledToFit()
@@ -37,7 +37,7 @@ struct ContentView: View {
         }
     }
 }
-struct RectangleButton: View {
+struct RectangleButton: View {                 //creates rectangle button
     var color: Color
     var title: String
     

@@ -2,17 +2,17 @@
 //  AIView.swift
 // BudgetApp
 //
-//  Created by Alex Rhodes on 11/9/23.
+//  Created by Alex Rhodes and Nicholas Mollica on 11/9/23.
 //
 
 import Foundation
 
 import SwiftUI
 
-struct AIView: View {
+struct AIView: View {                                   //creates AIView
     @State private var messages: [String] = []
     @State private var inputMessage: String = ""
-    let chatGPT = ChatGPT(apiKey: "sk")
+    let chatGPT = ChatGPT(apiKey: "sk")               //intakes API key for AI
     
     var body: some View {
         VStack {
@@ -42,7 +42,7 @@ struct AIView: View {
         }
     }
     
-    func sendMessage() {
+    func sendMessage() {                       //function to send message to AI
         chatGPT.sendMessage(inputMessage) { result in
             switch result {
             case .success(let response):
