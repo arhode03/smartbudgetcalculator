@@ -7,7 +7,14 @@
 
 import SwiftUI
 
-struct ContentView: View {      
+struct ContentView: View {
+       @State private var monthlyIncome = 0.0
+       @State private var variableCosts = 0.0
+       @State private var fixedCosts = 0.0
+       @State private var variableremainingIncome = 0.0
+       @State private var taxAmount = 0.0
+       @State private var v_expenses: [Expense] = []
+       @State private var expenses: [Expense] = []
     var body: some View {
         NavigationView {
             ZStack {

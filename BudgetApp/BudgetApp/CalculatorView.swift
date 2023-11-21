@@ -174,6 +174,25 @@ struct GraphView: View{                   //view that displays the graph and but
     var variableCosts: Double
     var fixedCosts: Double
     var variableremainingIncome: Double
+    private var taxAmount: Double {
+        if monthlyIncome <= 25.67 {
+                return 0
+            } else if monthlyIncome <= 91.83 {
+                return (monthlyIncome - 25.67) * 0.10
+            } else if monthlyIncome <= 294.42 {
+                return 6.62 + (monthlyIncome - 91.83) * 0.12
+            } else if monthlyIncome <= 598.58 {
+                return 30.93 + (monthlyIncome - 294.42) * 0.22
+            } else if monthlyIncome <= 1119.42 {
+                return 97.84 + (monthlyIncome - 598.58) * 0.24
+            } else if monthlyIncome <= 1414.58 {
+                return 222.84 + (monthlyIncome - 1119.42) * 0.32
+            } else if monthlyIncome <= 3497.92 {
+                return 317.30 + (monthlyIncome - 1414.58) * 0.35
+            } else {
+                return 1046.46 + (monthlyIncome - 3497.92) * 0.37
+        }
+               }
     @Binding var v_expenses: [Expense]
     @Binding var expenses: [Expense]
     var body: some View {
@@ -182,13 +201,14 @@ struct GraphView: View{                   //view that displays the graph and but
                 .font(.system(size: 20, weight: .bold))     //title
                 .foregroundColor(.red)
                 .padding()
+                Spacer()
             
             VStack(spacing: 0) {                    //graph start
                 Rectangle()
                     .fill(Color.green)           //green section is remaining income
                     .frame(height: barHeight(value: variableremainingIncome))
-                    .overlay(Text("\(Int(variableremainingIncome)) Dollars Remaining").foregroundColor(.white))
-                    .overlay(Text(String(format: "%.2f%%", variableremainingIncome / monthlyIncome * 100))
+                    .overlay(Text("\(Int(variableremainingIncome - taxAmount)) Dollars Remaining").foregroundColor(.white))
+                    .overlay(Text(String(format: "%.2f%%", (variableremainingIncome - taxAmount) / monthlyIncome * 100))
                             .foregroundColor(.white)
                             .offset(x: 0, y: -15)
                             .font(.system(size: 15, weight: .bold))
@@ -212,8 +232,22 @@ struct GraphView: View{                   //view that displays the graph and but
                             .offset(x: 0, y: -15)
                             .font(.system(size: 15, weight: .bold))
                     )
+                Rectangle()
+                    .fill(Color.brown)                  //red section is the total fixed costs
+                    .frame(height: barHeight(value: taxAmount))
+                    .overlay(Text("\(Int(taxAmount)) Total Taxed Cost").foregroundColor(.white))
+                    .overlay(Text(String(format: "%.2f%%", taxAmount / monthlyIncome * 100))
+                            .foregroundColor(.white)
+                            .offset(x: 0, y: -15)
+                            .font(.system(size: 15, weight: .bold))
+                    )
+                
             }
             .frame(height: 200)
+            .padding()
+            Text("Total Tax amount: $ \(taxAmount, specifier: "%.2f")")
+                .font(.headline)
+                .padding()
             NavigationLink(destination: ExpensesListView(expenses: $expenses, v_expenses: $v_expenses)) {
                 RectangleButton(color: Color.red, title: "Detailed Expenses")
             }
@@ -260,3 +294,4 @@ struct ExpensesListView: View {           //view that displays the detailed expe
         }
     }
 }
+
