@@ -174,8 +174,8 @@ struct GraphView: View{                   //view that displays the graph and but
     var variableCosts: Double
     var fixedCosts: Double
     var variableremainingIncome: Double
-    private var taxAmount: Double {
-        if monthlyIncome <= 25.67 {
+    private var taxAmount: Double {            //calculates tax amount based on income
+        if monthlyIncome <= 25.67 {              //minimum income is 25.67
                 return 0
             } else if monthlyIncome <= 91.83 {
                 return (monthlyIncome - 25.67) * 0.10
@@ -183,7 +183,7 @@ struct GraphView: View{                   //view that displays the graph and but
                 return 6.62 + (monthlyIncome - 91.83) * 0.12
             } else if monthlyIncome <= 598.58 {
                 return 30.93 + (monthlyIncome - 294.42) * 0.22
-            } else if monthlyIncome <= 1119.42 {
+            } else if monthlyIncome <= 1119.42 {                    //different tax brackets
                 return 97.84 + (monthlyIncome - 598.58) * 0.24
             } else if monthlyIncome <= 1414.58 {
                 return 222.84 + (monthlyIncome - 1119.42) * 0.32
@@ -245,16 +245,16 @@ struct GraphView: View{                   //view that displays the graph and but
             }
             .frame(height: 200)
             .padding()
-            Text("Total Tax amount: $ \(taxAmount, specifier: "%.2f")")
+            Text("Total Tax amount: $ \(taxAmount, specifier: "%.2f")")    //displays tax amount
                 .font(.headline)
                 .padding()
-            NavigationLink(destination: ExpensesListView(expenses: $expenses, v_expenses: $v_expenses)) {
+            NavigationLink(destination: ExpensesListView(expenses: $expenses, v_expenses: $v_expenses)) {      //button to move to detailed expenses
                 RectangleButton(color: Color.red, title: "Detailed Expenses")
             }
             NavigationLink(destination: {
                 ContentView()
             }, label: {
-                RectangleButton(color: Color.red, title: "Back to Home")
+                RectangleButton(color: Color.red, title: "Back to Home")             //home button
             })
            
         }
